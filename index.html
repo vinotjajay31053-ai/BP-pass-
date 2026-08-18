@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Free Fire Booyah Pass Preview</title>  
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --accent-color: #f59e0b;
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --border-color: #334155;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+    }
+
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header-container {
+      text-align: center;
+      margin-bottom: 30px;
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .event-series {
+      font-weight: bold;
+      color: var(--accent-color);
+      letter-spacing: 2px;
+      margin-bottom: 5px;
+    }
+
+    .event-title {
+      margin: 0 0 20px 0;
+      font-size: 2.2rem;
+      text-transform: uppercase;
+    }
+
+    /* Controls Section */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      background: #0f172a;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border-color);
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .input-group label {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-bottom: 5px;
+    }
+
+    .input-group input, .input-group select {
+      width: 100%;
+      padding: 8px 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    .input-group input:focus, .input-group select:focus {
+      outline: none;
+      border-color: var(--accent-color);
+    }
+
+    .bp-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .bp-button {
+      padding: 10px 20px;
+      border: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+      color: var(--text-main);
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      min-width: 90px;
+    }
+
+    .bp-button:hover, .bp-button.active {
+      background-color: var(--accent-color);
+      color: #000;
+      border-color: var(--accent-color);
+    }
+
+    .bundle-section {
+      margin-bottom: 35px;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      border-left: 4px solid var(--accent-color);
+      padding-left: 10px;
+      margin-bottom: 15px;
+      color: var(--text-main);
+    }
+
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 15px;
+    }
+
+    .item-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .item-image-container {
+      width: 100%;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #090d16;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .item-image {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .item-info {
+      padding: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .item-name {
+      font-weight: bold;
+      font-size: 0.95rem;
+      margin-bottom: 5px;
+    }
+
+    .item-path {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      word-break: break-all;
+      font-family: monospace;
+    }
+
+    .bp-content {
+      display: none;
+    }
+
+    .bp-content.active {
+      display: block;
+    }
+  </style> 
+</head> 
+<body> 
+  <div class="main-container"> 
+   <div class="header-container"> 
+    <div class="event-series" id="series-title">OB55 UPDATE</div> 
+    <h1 class="event-title" id="main-title">BOOYAH PASS BP101</h1> 
+
+    <!-- Dynamic Link Controls -->
+    <div class="controls-grid">
+      <div class="input-group">
+        <label for="baseDomain">Base Domain</label>
+        <select id="baseDomain" onchange="updateAllImages()">
+          <option value="https://dl.dir.freefiremobile.com/common">dl.dir.freefiremobile.com</option>
+          <option value="https://dl-tata.freefireind.in/common">dl-tata.freefireind.in</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label for="obVersion">OB Version</label>
+        <input type="text" id="obVersion" value="OB55" oninput="updateAllImages()">
+      </div>
+      <div class="input-group">
+        <label for="bpFolder">BP Folder</label>
+        <input type="text" id="bpFolder" value="BP101" oninput="onFolderInput()">
+      </div>
+      <div class="input-group">
+        <label for="bpSuffix">BP Suffix</label>
+        <input type="text" id="bpSuffix" value="101" oninput="updateAllImages()">
+      </div>
+    </div>
+
+    <!-- Dynamic Season Buttons -->
+    <div class="bp-buttons" id="buttonContainer"> 
+     <button class="bp-button active" onclick="clickBP('BP101', '101', event)">BP101</button> 
+     <button class="bp-button" onclick="clickBP('BP102', '102', event)">BP102</button> 
+     <button class="bp-button" onclick="clickBP('BP103', '103', event)">BP103</button> 
+    </div> 
+   </div> 
+
+   <!-- Dynamic Items Container --> 
+   <div class="bp-content active"> 
+    
+    <!-- Grand Prizes -->
+    <div class="bundle-section"> 
+     <div class="section-title">Grand Prizes</div> 
+     <div class="items-grid"> 
+      <div class="item-card"><div class="item-image-container"><img data-prefix="BP_GRANDPrize01" data-ext="jpg" alt="Prize 1" class="item-image"></div><div class="item-info"><div class="item-name">Grand Prize 01</div><div class="item-path"></div></div></div>
+      <div class="item-card"><div class="item-image-container"><img data-prefix="BP_GRANDPrize02" data-ext="jpg" alt="Prize 2" class="item-image"></div><div class="item-info"><div class="item-name">Grand Prize 02</div><div class="item-path"></div></div></div>
+      <div class="item-card"><div class="item-image-container"><img data-prefix="BP_GRANDPrize03" data-ext="jpg" alt="Prize 3" class="item-image"></div><div class="item-info"><div class="item-name">Grand Prize 03</div><div class="item-path"></div></div></div>
+      <div class="item-card"><div class="item-image-container"><img data-prefix="BP_GRANDPrize04" data-ext="jpg" alt="Prize 4" class="item-image"></div><div class="item-info"><div class="item-name">Grand Prize 04</div><div class="item-path"></div></div></div>
+      <div class="item-card"><div class="item-image-container"><img data-prefix="BP_GRANDPrize05" data-ext="jpg" alt="Prize 5" class="item-image"></div><div class="item-info"><div class="item-name">Grand Prize 05</div><div class="item-path"></div></div></div>
+      <div class="item-card"><div class="item-image-container"><img data-prefix="BP_GRANDPrize06" data-ext="jpg" alt="Prize 6" class="item-image"></div><div class="item-info"><div class="item-name">Grand Prize 06</div><div class="item-path"></div></div></div>
+      <div class="item-card"><div class="item-image-container"><img data-prefix="BP_GRANDPrize07" data-ext="jpg" alt="Prize 7" class="item-image"></div><div class="item-info"><div class="item-name">Grand Prize 07</div><div class="item-path"></div></div></div>
+     </div> 
+    </div> 
+
+    <!-- Premium Backgrounds -->
+    <div class="bundle-section"> 
+     <div class="section-title">Premium Backgrounds</div> 
+     <div class="items-grid"> 
+      <div class="item-card"><div class="item-image-container"><img data-prefix="BP_Premium_bg01" data-ext="jpg" alt="Premium BG 1" class="item-image"></div><div class="item-info"><div class="item-name">Premium Background 01</div><div class="item-path"></div></div></div>
+      <div class="item-card"><div class="item-image-container"><img data-prefix="BP_Premium_bg02" data-ext="jpg" alt="Premium BG 2" class="item-image"></div><div class="item-info"><div class="item-name">Premium Background 02</div><div class="item-path"></div></div></div>
+      <div class="item-card"><div class="item-image-container"><img data-prefix="BP_Premium_item_bg01" data-ext="jpg" alt="Item BG 1" class="item-image"></div><div class="item-info"><div class="item-name">Premium Item BG 01</div><div class="item-path"></div></div></div>
+      <div class="item-card"><div class="item-image-container"><img data-prefix="BP_Premium_item_bg02" data-ext="jpg" alt="Item BG 2" class="item-image"></div><div class="item-info"><div class="item-name">Premium Item BG 02</div><div class="item-path"></div></div></div>
+      <div class="item-card"><div class="item-image-container"><img data-prefix="BP_Premium_item_bg03" data-ext="jpg" alt="Item BG 3" class="item-image"></div><div class="item-info"><div class="item-name">Premium Item BG 03</div><div class="item-path"></div></div></div>
+     </div> 
+    </div> 
+
+    <!-- Premium Items -->
+    <div class="bundle-section"> 
+     <div class="section-title">Premium Items</div> 
+     <div class="items-grid"> 
+      <div class="item-card"><div class="item-image-container"><img data-prefix="BP_Premium_title" data-ext="png" alt="Premium Title" class="item-image"></div><div class="item-info"><div class="item-name">Premium Title</div><div class="item-path"></div></div></div>
+      <div class="item-card"><div class="item-image-container"><img data-prefix="BP_Premium_icon" data-ext="png" alt="Premium Icon" class="item-image"></div><div class="item-info"><div class="item-name">Premium Icon</div><div class="item-path"></div></div></div>
+      <div class="item-card"><div class="item-image-container"><img data-prefix="BP_Window_PP" data-ext="png" alt="Window PP" class="item-image"></div><div class="item-info"><div class="item-name">Window PP</div><div class="item-path"></div></div></div>
+      <div class="item-card"><div class="item-image-container"><img data-prefix="BP_Prize" data-ext="png" alt="Prize Image" class="item-image"></div><div class="item-info"><div class="item-name">Prize Image</div><div class="item-path"></div></div></div>
+     </div> 
+    </div> 
+
+    <!-- Subtype Images -->
+    <div class="bundle-section"> 
+     <div class="section-title">Subtype Images</div> 
+     <div class="items-grid"> 
+      <div class="item-card"><div class="item-image-container"><img data-prefix="subtype36" data-ext="jpg" alt="Subtype 36" class="item-image"></div><div class="item-info"><div class="item-name">Subtype 36</div><div class="item-path"></div></div></div>
+      <div class="item-card"><div class="item-image-container"><img data-prefix="subtype1" data-ext="jpg" alt="Subtype 1" class="item-image"></div><div class="item-info"><div class="item-name">Subtype 1</div><div class="item-path"></div></div></div>
+      <div class="item-card"><div class="item-image-container"><img data-prefix="subtype2" data-ext="jpg" alt="Subtype 2" class="item-image"></div><div class="item-info"><div class="item-name">Subtype 2</div><div class="item-path"></div></div></div>
+      <div class="item-card"><div class="item-image-container"><img data-prefix="subtype3" data-ext="jpg" alt="Subtype 3" class="item-image"></div><div class="item-info"><div class="item-name">Subtype 3</div><div class="item-path"></div></div></div>
+     </div> 
+    </div> 
+
+   </div> 
+  </div> 
+
+  <script>
+    // Called when user types manually into BP Folder input
+    function onFolderInput() {
+      const folderVal = document.getElementById('bpFolder').value.trim();
+      const numMatch = folderVal.match(/\d+/);
+
+      if (numMatch) {
+        const num = parseInt(numMatch[0], 10);
+        
+        // Auto update suffix input with the number
+        document.getElementById('bpSuffix').value = num;
+
+        // Re-generate the 3 buttons starting from 'num'
+        updateButtons(num, folderVal);
+      } else {
+        // Fallback for non-numeric folder input
+        const activeBtn = document.querySelector('.bp-button.active');
+        if (activeBtn) activeBtn.textContent = folderVal || 'BP';
+      }
+
+      updateAllImages();
+    }
+
+    // Re-creates the 3 buttons dynamically based on the current number
+    function updateButtons(startNum, activeFolder) {
+      const container = document.getElementById('buttonContainer');
+      container.innerHTML = '';
+
+      for (let i = 0; i < 3; i++) {
+        const currentNum = startNum + i;
+        const folderName = `BP${currentNum}`;
+        const suffixName = `${currentNum}`;
+
+        const btn = document.createElement('button');
+        btn.className = 'bp-button' + (folderName.toLowerCase() === activeFolder.toLowerCase() ? ' active' : '');
+        btn.textContent = folderName;
+        btn.onclick = (e) => clickBP(folderName, suffixName, e);
+
+        container.appendChild(btn);
+      }
+    }
+
+    // Called when clicking any season button
+    function clickBP(folder, suffix, evt) {
+      document.getElementById('bpFolder').value = folder;
+      document.getElementById('bpSuffix').value = suffix;
+
+      // Update button active state
+      document.querySelectorAll('.bp-button').forEach(btn => btn.classList.remove('active'));
+      if (evt && evt.currentTarget) {
+        evt.currentTarget.classList.add('active');
+      }
+
+      updateAllImages();
+    }
+
+    // Re-calculates and updates image URLs + text titles
+    function updateAllImages() {
+      const domain = document.getElementById('baseDomain').value;
+      const ob = document.getElementById('obVersion').value.trim();
+      const folder = document.getElementById('bpFolder').value.trim();
+      const suffix = document.getElementById('bpSuffix').value.trim();
+
+      const cleanSuffix = suffix.startsWith('_') ? suffix.slice(1) : suffix;
+
+      // Update Header Titles
+      document.getElementById('series-title').textContent = `${ob} UPDATE`;
+      document.getElementById('main-title').textContent = `BOOYAH PASS ${folder.toUpperCase()}`;
+
+      // Update Image Sources and Paths
+      const cards = document.querySelectorAll('.item-card');
+      cards.forEach(card => {
+        const img = card.querySelector('img');
+        const pathDiv = card.querySelector('.item-path');
+
+        const prefix = img.getAttribute('data-prefix');
+        const ext = img.getAttribute('data-ext');
+
+        const relativePath = `${ob}/CSH/${folder}/${prefix}_${cleanSuffix}.${ext}`;
+        const fullUrl = `${domain}/${relativePath}`;
+
+        img.src = fullUrl;
+        pathDiv.textContent = relativePath;
+      });
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      updateAllImages();
+    });
+  </script> 
+ </body>
+</html>
